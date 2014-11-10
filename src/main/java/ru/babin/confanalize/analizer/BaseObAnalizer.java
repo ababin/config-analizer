@@ -8,6 +8,10 @@ public abstract class BaseObAnalizer <T> {
 	
 	protected ArrayList <String> lines = new ArrayList <String>();
 	
+	public void addString(String str){
+		lines.add(str);
+	}
+	
 	public abstract boolean isValidObject();
 	
 	public abstract boolean isValidObjectForAddedValue(String str);
