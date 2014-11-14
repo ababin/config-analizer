@@ -11,7 +11,7 @@ public class ConfigParamAnalizer extends BaseObAnalizer <ConfigParam> {
 	
 	@Override
 	public boolean isValidObject(){
-		return isValidParam() && isValidDesc();
+		return isValidParam();
 	}
 	
 	@Override
@@ -29,36 +29,16 @@ public class ConfigParamAnalizer extends BaseObAnalizer <ConfigParam> {
 		}
 		String paramString = lines.get(lines.size()-1);
 		String name = prepareParamName(paramString);
-		String desc = prepareParamDesc();
 		String val = prepareParamVal(paramString);
-		ConfigParam section = new ConfigParam(name, desc , val);
+		ConfigParam section = new ConfigParam(name, val);
 		return section;
 	}
-	
-	private boolean isValidDesc(){
-		for(int i = 0; i < lines.size()-1; i++){
-			if(!lines.get(i).startsWith(COMENT_CHAR)){
-				return false;
-			}
-		}
-		return true;
-	}
-	
+			
 	private boolean isValidParam(){
-		return !lines.isEmpty()
-				&& !lines.get(lines.size()-1).startsWith(COMENT_CHAR);
+		return lines.size() == 1
+				&& !lines.get(0).startsWith(COMENT_CHAR);
 	}
-	
-	
-	
-	private String prepareParamDesc(){
-		String strOut = "";
-		for(int i  = 0; i < lines.size() - 1; i++){
-			strOut += lines.get(i).substring(1);
-		}
-		return strOut.replaceAll("\\s+", " ").trim();
-	}
-	
+			
 	private String prepareParamName(String str){
 		int index = str.indexOf("=");
 		return index < 0 ? null : str.substring(0, index).trim();

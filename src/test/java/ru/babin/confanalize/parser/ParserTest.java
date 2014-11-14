@@ -18,13 +18,29 @@ public class ParserTest {
 		Parser p = new Parser();
 		List <ConfigParam> params = p.parse("src/test/resources/iptvmw-config.properties");
 		assertTrue(!params.isEmpty());
-		assertEquals(params.size() , 347);
+		assertEquals(params.size() , 86);
 		for(ConfigParam param : params){
 			System.out.println();
 			System.out.println(param.sectionIndex + " (" + param.sectionName + ")");
 			System.out.println(param.name + " {{" + param.desc + "}}");
-			
 		}
+		
+	}
+	
+	@Test
+	public void test_oneDescFor2props() throws IOException{
+		Parser p = new Parser();
+		List <ConfigParam> params = p.parse("src/test/resources/iptvmw-config_one_desc_for_2_props.properties");
+		assertTrue(!params.isEmpty());
+		assertEquals(params.size() , 3);
+		assertEquals(params.get(1).desc , params.get(2).desc);
+		
+		for(ConfigParam param : params){
+			System.out.println();
+			System.out.println(param.sectionIndex + " (" + param.sectionName + ")");
+			System.out.println(param.name + " {{" + param.desc + "}}");
+		}
+		
 		
 	}
 	

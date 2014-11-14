@@ -1,56 +1,92 @@
 package ru.babin.confanalize.analizer;
 
 import ru.babin.confanalize.model.ConfigParam;
+import ru.babin.confanalize.model.ConfigParamDesc;
 import ru.babin.confanalize.model.ConfigSection;
 
 
 public class Analizer {
 	
-	private ConfigSection section;
-	private ConfigParam param;
+	private ConfigSection curSection;
+	private ConfigParam curParam;
+	private ConfigParamDesc curDesc;
 	private ConfigParamAnalizer paramAnalizer = new ConfigParamAnalizer();
+	private ConfigParamDescAnalizer descAnalizer = new ConfigParamDescAnalizer();
 	private ConfigSectionAnalizer sectionAnalizer = new ConfigSectionAnalizer();
 	
 		
 	public ConfigParam processAndGetParam(String str){
 		if(sectionAnalizer.isValidObject() && !sectionAnalizer.isValidObjectForAddedValue(str)){
-			// section is ready!!
-			section = sectionAnalizer.prepareObject();
-			sectionAnalizer = new ConfigSectionAnalizer();
-			paramAnalizer = new ConfigParamAnalizer();
+			sectionIsReadyEvent();			
+		} else if(descAnalizer.isValidObject() && !descAnalizer.isValidObjectForAddedValue(str)){
+			descIsReadyEvent();
+		} else if(paramAnalizer.isValidObject() && !paramAnalizer.isValidObjectForAddedValue(str)){
+			paramIsReadyEvent();
 		}
 		
-		if(paramAnalizer.isValidObject() && !paramAnalizer.isValidObjectForAddedValue(str)){
-			param = paramAnalizer.prepareObject();
-			paramAnalizer = new ConfigParamAnalizer();
-		}
-		
-		sectionAnalizer.addString(str);
-		paramAnalizer.addString(str);
+		addStringForAnalizers(str);
 		
 		return prepareParam();		
 	}
 	
 	public ConfigParam getLastParam(){
 		if(paramAnalizer.isValidObject()){
-			param = paramAnalizer.prepareObject();
+			curParam = paramAnalizer.prepareObject();
 		}
 		return prepareParam();
 	}
 	
+	private void sectionIsReadyEvent(){
+		curSection = sectionAnalizer.prepareObject();
+		newSectionAnalizer();
+		newParamAnalizer();
+		newDescAnalizer();
+	}
+	
+	private void descIsReadyEvent(){
+		curDesc = descAnalizer.prepareObject();
+		curParam = null;
+		newDescAnalizer();
+		newParamAnalizer();
+	}
+	
+	private void paramIsReadyEvent(){
+		curParam = paramAnalizer.prepareObject();
+		newParamAnalizer();
+		newDescAnalizer();
+	}
+			
 	private ConfigParam prepareParam(){
-		if(param != null){
-			if(section != null){
-				param.sectionIndex = section.index;
-				param.sectionName = section.name;
+		if(curParam != null){
+			if(curSection != null){
+				curParam.sectionIndex = curSection.index;
+				curParam.sectionName = curSection.name;
+			}
+			if(curDesc != null){
+				curParam.desc = curDesc.desc;
 			}
 		}
-		ConfigParam prepared = param;
-		param = null;
+		ConfigParam prepared = curParam;
+		curParam = null;
 		
 		return prepared;
 	}
 	
+	private void newSectionAnalizer(){
+		sectionAnalizer = new ConfigSectionAnalizer();
+	}
 	
+	private void newParamAnalizer(){
+		paramAnalizer = new ConfigParamAnalizer();
+	}
 	
+	private void newDescAnalizer(){
+		descAnalizer = new ConfigParamDescAnalizer();
+	}
+	
+	private void addStringForAnalizers(String str){
+		sectionAnalizer.addString(str);
+		descAnalizer.addString(str);
+		paramAnalizer.addString(str);
+	}
 }

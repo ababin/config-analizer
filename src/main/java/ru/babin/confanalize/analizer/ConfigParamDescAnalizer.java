@@ -34,7 +34,7 @@ public class ConfigParamDescAnalizer extends BaseObAnalizer <ConfigParamDesc> {
 				return false;
 			}
 		}
-		return true;
+		return lines.isEmpty() ? false : true;
 	}
 		
 	private String prepareParamDesc(){
