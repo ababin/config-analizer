@@ -8,13 +8,22 @@ import java.util.List;
 
 import ru.babin.confanalize.analizer.Analizer;
 import ru.babin.confanalize.model.ConfigParam;
+import ru.babin.confanalize.model.ConfigurationFile;
 
-public class Parser {
+public class ConfigurationFileParser {
 	
 	
-	public List <ConfigParam> parse(String filePath){
+	public ConfigurationFile parse(String filePath){
 		List <String> strings = readFile(filePath);
-		return parseStrings(strings);
+		return new ConfigurationFile(filePath, parseStrings(strings));
+	}
+	
+	public List <ConfigurationFile> parse(List <String> files){
+		List <ConfigurationFile> res = new ArrayList <ConfigurationFile> ();
+		for(String file : files){
+			res.add(parse(file));
+		}
+		return res;
 	}
 	
 	private List <ConfigParam> parseStrings(List <String> strings){
