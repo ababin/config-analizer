@@ -38,7 +38,7 @@ public class ReportCreator {
 	
 	private void showReportByAbsence(List<CompareItem> absences) {
 		if(!absences.isEmpty()){
-			print("ABSENCE : ");
+			print("ABSENCE PARAMETERS: ");
 			print("----------------------------------------------------------------------------------------");
 			for(CompareItem item : absences){
 				print("# " + item.origParam.sectionIndex + " " + item.origParam.sectionName);
@@ -54,13 +54,13 @@ public class ReportCreator {
 	
 	private void showReportByDifference(List<CompareItem> differences) {
 		if(!differences.isEmpty()){
-			print("DIFFERENCE : ");
+			print("DIFFERENCE PARAMETERS: ");
 			print("----------------------------------------------------------------------------------------");
 			for(CompareItem item : differences){
 				print("# " + item.origParam.sectionIndex + " " + item.origParam.sectionName);
 				print("# " + item.origParam.desc);
-				print(item.origParam.name + "=" + item.origParam.val + "    [ORIGINAL]");
-				print(item.origParam.name + "=" + item.srcParam.val + "    [ANALIZED]");
+				print(item.origParam.name + "=" + item.origParam.val + " [ORIGINAL]");
+				print(item.origParam.name + "=" + item.srcParam.val + " [ANALIZED]");
 				print("");
 			}
 			print("----------------------------------------------------------------------------------------");
@@ -71,7 +71,7 @@ public class ReportCreator {
 	
 	private void showReportByUnknown(List<CompareItem> unknowns) {
 		if(!unknowns.isEmpty()){
-			print("UNKNOWN : ");
+			print("UNKNOWN PARAMETERS: ");
 			print("----------------------------------------------------------------------------------------");
 			for(CompareItem item : unknowns){
 				print("# " + item.srcParam.sectionIndex + " " + item.srcParam.sectionName);

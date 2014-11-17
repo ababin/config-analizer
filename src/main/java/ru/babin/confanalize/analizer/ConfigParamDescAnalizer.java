@@ -39,7 +39,7 @@ public class ConfigParamDescAnalizer extends BaseObAnalizer <ConfigParamDesc> {
 		
 	private String prepareParamDesc(){
 		String strOut = "";
-		for(int i  = 0; i < lines.size() - 1; i++){
+		for(int i  = 0; i < lines.size(); i++){
 			strOut += lines.get(i).substring(1);
 		}
 		return strOut.replaceAll("\\s+", " ").trim();
