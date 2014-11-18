@@ -30,6 +30,7 @@
 						</manifest>
 						<addMavenDescriptor>true</addMavenDescriptor>
 						<manifestEntries>
+							<Main-Class>ru.babin.confanalize.main.Main</Main-Class>
 							<Artefact-version>${project.version}</Artefact-version>
 							<Build-number-with-prefix>${buildNumberValueWithPrefix}</Build-number-with-prefix>
 							<Build-number>${buildNumber}</Build-number>
