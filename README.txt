@@ -1,3 +1,17 @@
 Вызов утилиты:
 
--original=/opt/original.properties -path=/opt/main.properties;/etc/tve/main-custom.properties  
+параметры: 
+
+-orig - путь к оригиналу. Если параметр не существует, то используется файл с именем 'original.properties', лежащий рядом с jar-файлом
+
+-path - пути анализируемых конфигов, через ";". Каждый следующий конфиг переопределяет параметры предыдущих, если такое пересечение присутствует
+
+-F - параметр для указания дополнительных флагов:
+     a - показывать ABSENCE
+     d - показывать DIFFERENCE
+     u - показывать UNKNOWN
+     Если параметры отсутвуют, то считается, что включены ВСЕ флаги. То есть отображается всё.
+     
+
+
+-orig=/opt/original.properties -path=/opt/main.properties;/etc/tve/main-custom.properties  

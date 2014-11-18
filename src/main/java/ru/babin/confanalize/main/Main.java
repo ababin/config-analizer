@@ -24,7 +24,7 @@ public class Main {
 		ConfigurationHolder originalHolder = new ConfigurationHolder(originalFile);
 		ConfigurationHolder analizedHolder = new ConfigurationHolder(analizedFiles);
 		
-		reportCreator.prepareAndShowDifference(originalHolder, analizedHolder);
+		reportCreator.prepareAndShowDifference(originalHolder, analizedHolder , configuration.flags);
 	}
 
 }

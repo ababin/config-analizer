@@ -8,9 +8,12 @@ public class Configuration {
 	
 	public final List <String> analizedFiles;	
 	
-	public Configuration(String orig, List <String> files){
+	public final Flags flags;
+	
+	public Configuration(String orig, List <String> files, Flags flags){
 		origFile = orig;
 		analizedFiles = files;
+		this.flags = flags;
 	}
 	
 }

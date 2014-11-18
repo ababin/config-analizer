@@ -6,13 +6,14 @@ import java.util.List;
 import ru.babin.confanalize.compare.CompareItem;
 import ru.babin.confanalize.compare.ConfigComparator;
 import ru.babin.confanalize.compare.ItemType;
+import ru.babin.confanalize.input.Flags;
 import ru.babin.confanalize.model.ConfigurationHolder;
 
 public class ReportCreator {
 	
 	ConfigComparator comparator = new ConfigComparator();
 	
-	public void prepareAndShowDifference(ConfigurationHolder original, ConfigurationHolder analized){
+	public void prepareAndShowDifference(ConfigurationHolder original, ConfigurationHolder analized, Flags flags){
 		List <CompareItem> items = comparator.compare(original.params, analized.params);
 		
 		if(items.isEmpty()){
@@ -22,15 +23,21 @@ public class ReportCreator {
 		
 		// ItemType.ABSENCE;
 		List <CompareItem> absence = filterByType(items, ItemType.ABSENCE);
-		showReportByAbsence(absence);
+		if(flags.showAbsence){
+			showReportByAbsence(absence);
+		}
 		
 		List <CompareItem> difference = filterByType(items, ItemType.DIFFERENCE);
-		showReportByDifference(difference);
+		if(flags.showDifference){
+			showReportByDifference(difference);
+		}
 		
 		List <CompareItem> unknown = filterByType(items, ItemType.UNKNOWN);
-		showReportByUnknown(unknown);
+		if(flags.showUnknown){
+			showReportByUnknown(unknown);
+		}
 		
-		reportEnd();
+		reportEnd(absence.size(), difference.size(), unknown.size());
 	}
 	
 	
@@ -85,8 +92,8 @@ public class ReportCreator {
 		}		
 	}
 	
-	private void reportEnd(){
-		print("REPORT END");
+	private void reportEnd(int absenceCount, int differenceCount, int unknownCount){
+		print("Was found: ABSENCE-" + absenceCount + "; DIFFERENCE-" + differenceCount + "; UNKNOWN-" + unknownCount + ";");
 	}
 
 

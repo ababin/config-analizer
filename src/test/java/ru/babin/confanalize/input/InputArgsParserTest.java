@@ -50,17 +50,13 @@ public class InputArgsParserTest {
 	}
 	
 	@Test
-	public void test_WithErrorOrig(){
+	public void test_WithoutOrig(){
 		String f1 = "/opt/file1";
 		String f2 = "/opt/file2";
 		String path = f1 + ";" + f2;
 		String [] args = new String[] { PATH_PARAM + "=" + path};
-		try{
-			parser.parse(args);
-		}catch(RuntimeException e){
-			return;
-		}
-		fail();
+		Configuration conf = parser.parse(args);
+		assertNotNull(conf.origFile);
 	}
 	
 	
